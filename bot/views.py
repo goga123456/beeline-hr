@@ -506,7 +506,7 @@ def send_email(message):
 
     print("Successfully")
 
-    for path in Path('bot/send and clear/').glob('*'):
+    for path in Path('bot/send and clear').glob('*'):
         if path.is_dir():
             rmtree(path)
         else:
