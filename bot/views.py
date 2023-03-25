@@ -490,7 +490,7 @@ def send_email(message):
     text = bs(html, "html.parser").text
     msg.attach(MIMEText(text, 'plain'))
     msg.attach(MIMEText(html, 'html', 'utf-8'))
-    src = 'C:/Users/User/Desktop/beeline-second/bot/send and clear/' + user.resume;
+    src = 'bot/send and clear' + user.resume;
     fp = open(src, 'rb')
     att = email.mime.application.MIMEApplication(fp.read())
     fp.close()
