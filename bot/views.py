@@ -5,13 +5,13 @@ from datetime import datetime
 
 
 import telebot
-#from django.http import JsonResponse
-#from django.views import View
+from django.http import JsonResponse
+from django.views import View
 
 from telebot import types
 from telebot.storage import StateMemoryStorage
 
-#from core.settings import BOT_TOKEN, BOT_URL
+from core.settings import BOT_TOKEN, BOT_URL
 import os
 
 import email
@@ -39,13 +39,13 @@ state_storage = StateMemoryStorage()
 bot = telebot.TeleBot('6013008737:AAEznnhypUcih6TuZKmvxz-t1sm0isoDaVk')
 
 
-"""class BotAPIView(View):
+class BotAPIView(View):
     def post(self, request):
         json_string = request.body.decode('UTF-8')
         print(123)
         update = telebot.types.Update.de_json(json_string)
         bot.process_new_updates([update])
-        return JsonResponse({'code': 200})"""
+        return JsonResponse({'code': 200})
 
 user_dict = {}
 
@@ -529,4 +529,3 @@ bot.enable_save_next_step_handlers(delay=2)
 
 bot.load_next_step_handlers()
 
-bot.polling()
