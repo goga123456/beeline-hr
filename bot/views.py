@@ -409,7 +409,7 @@ def ask_resume(message):
     
         user.resume = message.document.file_name
 
-        src = 'C:/Users/User/Desktop/beeline-second/bot/send and clear/' + message.document.file_name;
+        src = 'bot/send and clear' + message.document.file_name;
         with open(src, 'wb') as new_file:
             new_file.write(downloaded_file)
 
@@ -506,7 +506,7 @@ def send_email(message):
 
     print("Successfully")
 
-    for path in Path('C:/Users/User/Desktop/beeline-second/bot/send and clear/').glob('*'):
+    for path in Path('bot/send and clear/').glob('*'):
         if path.is_dir():
             rmtree(path)
         else:
