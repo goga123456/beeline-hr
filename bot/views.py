@@ -36,13 +36,12 @@ telebot.logger.setLevel(logging.DEBUG)
 
 state_storage = StateMemoryStorage()
 
-bot = telebot.TeleBot('6013008737:AAEznnhypUcih6TuZKmvxz-t1sm0isoDaVk')
+bot = telebot.TeleBot('6203162805:AAGNiPa8rfioozNJoFpBU_ssxw-E6bUIBIc')
 
 
 class BotAPIView(View):
     def post(self, request):
         json_string = request.body.decode('UTF-8')
-        print(123)
         update = telebot.types.Update.de_json(json_string)
         bot.process_new_updates([update])
         return JsonResponse({'code': 200})
@@ -51,31 +50,31 @@ user_dict = {}
 
 
 lang_dict = {'wrong_data': {'Русский 🇷🇺': 'Неверные данные', 'Oʻzbek tili 🇺🇿': 'Notoʻgʻri maʻlumotlar'},
-             'ask_name': {'Русский 🇷🇺': 'Напиши своё имя', 'Oʻzbek tili 🇺🇿': 'Ismingizni yozing'},
+             'ask_name': {'Русский 🇷🇺': 'Напишите своё имя', 'Oʻzbek tili 🇺🇿': 'Ismingizni yozing'},
              'wrong_name': {'Русский 🇷🇺': 'Данные введены некорректно. Просим указать имя',
                             'Oʻzbek tili 🇺🇿': 'Maʻlumotlar notoʻgʻri kiritilgan. Iltimos, ismni koʻrsating'},
-             'ask_surname': {'Русский 🇷🇺': 'Напиши свою фамилию', 'Oʻzbek tili 🇺🇿': 'Familiyangizni yozing'}, 
+             'ask_surname': {'Русский 🇷🇺': 'Напишите свою фамилию', 'Oʻzbek tili 🇺🇿': 'Familiyangizni yozing'}, 
              'wrong_surname': {'Русский 🇷🇺': 'Данные введены некорректно. Просим указать фамилию',
                             'Oʻzbek tili 🇺🇿': 'Maʻlumotlar notoʻgʻri kiritilgan. Iltimos, familiyangizni kiriting'},              
-             'ask_number': {'Русский 🇷🇺': 'Укажи контактный номер ,чтобы мы могли связаться с тобой', 'Oʻzbek tili 🇺🇿': 'Siz bilan bogʻlanishimiz uchun telefon raqamingizni kiriting'},
+             'ask_number': {'Русский 🇷🇺': 'Укажитe контактный номер ,чтобы мы могли связаться с вами', 'Oʻzbek tili 🇺🇿': 'Siz bilan bogʻlanishimiz uchun telefon raqamingizni kiriting'},
              'wrong_number': {'Русский 🇷🇺': 'Неверный формат номера!', 'Oʻzbek tili 🇺🇿': 'Notoʻgʻri raqam formati!'},
               
-             'ask_vacancy': {'Русский 🇷🇺': 'Напиши название желаемой вакансии', 'Oʻzbek tili 🇺🇿': 'Istagan vakansiyaning nomini yozing'},
+             'ask_vacancy': {'Русский 🇷🇺': 'Напишите название желаемой вакансии', 'Oʻzbek tili 🇺🇿': 'Istagan vakansiyaning nomini yozing'},
              'wrong_vacancy': {'Русский 🇷🇺': 'Данные введены некорректно. Напиши название желаемой вакансии', 'Oʻzbek tili 🇺🇿': 'Maʻlumotlar notoʻgʻri kiritilgan. Istagan vakansiyaning nomini yozing'},
 
-             'ask_resume': {'Русский 🇷🇺': 'Пожалуйста отправь своё резюме', 'Oʻzbek tili 🇺🇿': 'Iltimos, CV ni yuboring'},
-             'wrong_resume': {'Русский 🇷🇺': 'Неверный формат данных.Пожалуйста отправьте своё резюме', 'Oʻzbek tili 🇺🇿': 'Maʼlumotlar formati notoʻgʻri.Iltimos, CV ni yuboring'},
+             'ask_resume': {'Русский 🇷🇺': 'Пожалуйста отправьте своё резюме', 'Oʻzbek tili 🇺🇿': 'Iltimos, CV ni yuboring'},
+             'wrong_resume': {'Русский 🇷🇺': 'Неверный формат данных.Пожалуйста отправьте своё резюме', 'Oʻzbek tili 🇺🇿': 'Maʻlumotlar formati notoʻgʻri.Iltimos, CV ni yuboring'},
 
-             'accept': {'Русский 🇷🇺': 'Ты даёшь согласие на обработку персональных данных?', 'Oʻzbek tili 🇺🇿': 'Shaxsiy maʼlumotlarni qayta ishlashga rozilik berasizmi?'},
+             'accept': {'Русский 🇷🇺': 'Вы даёте согласие на обработку персональных данных?', 'Oʻzbek tili 🇺🇿': 'Shaxsiy maʻlumotlarni qayta ishlashga rozilik berasizmi?'},
 
              'yes': {'Русский 🇷🇺': 'Да', 'Oʻzbek tili 🇺🇿': 'Ha'},
             
-             'again': {'Русский 🇷🇺': 'Если хочешь пройти опрос заново нажми на кнопку: "/start" ',
+             'again': {'Русский 🇷🇺': 'Если хотите пройти опрос заново, нажмите на кнопку: "/start"',
                        'Oʻzbek tili 🇺🇿': 'Soʻrovnomadan qaytadan oʻtishni istasangiz quyidagi tugmani bosing: "/start"'},
              'ne_interesuyet': {'Русский 🇷🇺': 'Не интересует', 'Oʻzbek tili 🇺🇿': 'Qiziqtirmaydi'},
              'back': {'Русский 🇷🇺': 'Назад', 'Oʻzbek tili 🇺🇿': 'Ortga'},
              'start': {'Русский 🇷🇺': 'Начать сначала', 'Oʻzbek tili 🇺🇿': 'Boshidan boshlash'},
-             'sendmail': {'Русский 🇷🇺': 'Твоё резюме отправлено на рассмотрение, мы вам перезвоним', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi, biz sizga qoʻngʻiroq qilamiz'}                         
+             'sendmail': {'Русский 🇷🇺': 'Ваше резюме отправлено на рассмотрение. Спасибо за отклик!', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi. Javobingiz uchun rahmat!'}                         
              
              
              }
@@ -462,7 +461,7 @@ def send_email(message):
     toaddr = "bukanov1234@mail.ru"
     msg['From'] = fromaddr
     msg['To'] = toaddr
-    msg['Subject'] = "Отправитель: Telegram bot"
+    msg['Subject'] = user.jobs_name
 
     now = datetime.now()
     response_date = now.strftime("%d.%m.%Y")
@@ -480,7 +479,7 @@ def send_email(message):
     <p>Имя: {user.name}<p>
     <p>Фамилия: {user.surname}<p>
     <p>Номер: {user.number}<p>
-    <p>Желаемая должность: {user.jobs_name}<p>
+    
 
 
                                
