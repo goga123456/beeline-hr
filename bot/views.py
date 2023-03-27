@@ -139,7 +139,7 @@ def ask_language(message):
         if (lang == '/start'):
             process_start(message)
             return
-
+ 
         user = User(lang)
         user_dict[chat_id] = user
         print(user)
@@ -407,7 +407,16 @@ def ask_resume(message):
         downloaded_file = bot.download_file(file_info.file_path)
     
         user.resume = message.document.file_name
-
+        
+        if (message.text == '/start'):
+            process_start(message)
+            return
+        if (message.text == lang_dict['start'][user.lang]):
+            process_start(message)
+            return
+        if (message.text == lang_dict['back'][user.lang]):
+            between_number_and_vacancy(message)
+            return
         src = 'bot/send and clear' + message.document.file_name;
         with open(src, 'wb') as new_file:
             new_file.write(downloaded_file)
