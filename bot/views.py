@@ -395,7 +395,7 @@ def between_vacancy_and_ask_resume(message):
     btn_2 = types.KeyboardButton(lang_dict['back'][user.lang])
     markup__v1.row(btn_1, btn_2)
 
-    msg = bot.send_message(message.chat.id, lang_dict['ask_resume'][user.lang], reply_markup = markup__v1)
+    msg = bot.send_message(message.chat.id, lang_dict['ask_resume'][user.lang], reply_markup = markup)
     bot.register_next_step_handler(msg, ask_resume)          
 
 @bot.message_handler(content_types=['document'])
@@ -409,25 +409,16 @@ def ask_resume(message):
     
         user.resume = message.document.file_name
         
-        if (message.text == '/start'):
-            process_start(message)
-            return
-        if (message.text == lang_dict['start'][user.lang]):
-            process_start(message)
-            return
-        if (message.text == lang_dict['back'][user.lang]):
-            between_number_and_vacancy(message)
-            return
+        
         src = 'bot/send and clear' + message.document.file_name;
         with open(src, 'wb') as new_file:
             new_file.write(downloaded_file)
         
-        markup__v1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn_1 = types.KeyboardButton(lang_dict['start'][user.lang])
-        btn_2 = types.KeyboardButton(lang_dict['back'][user.lang])
-        markup__v1.row(btn_1, btn_2)
-        
-        bot.reply_to(message, lang_dict['i_save_it'][user.lang], reply_markup = markup__v1)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn = types.KeyboardButton(lang_dict['start'][user.lang])
+        markup.row(btn)
+
+        bot.reply_to(message, lang_dict['i_save_it'][user.lang], reply_markup = markup)
         Accept(message)
         
     except Exception:
