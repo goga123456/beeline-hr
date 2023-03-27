@@ -403,6 +403,10 @@ def ask_resume(message):
     try:
         chat_id = message.chat.id
         user = user_dict[chat_id]
+        
+        if (message.text == lang_dict['start'][user.lang] or message.text == '/start'):
+            process_start(message)
+            return
 
         file_info = bot.get_file(message.document.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
