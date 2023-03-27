@@ -407,7 +407,10 @@ def ask_resume(message):
         if (message.text == lang_dict['start'][user.lang] or message.text == '/start'):
             process_start(message)
             return
-
+        if (message.text == lang_dict['back'][user.lang]):
+            between_number_and_vacancy(message)
+            return
+        
         file_info = bot.get_file(message.document.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
     
