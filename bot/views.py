@@ -74,7 +74,8 @@ lang_dict = {'wrong_data': {'Русский 🇷🇺': 'Неверные дан�
              'ne_interesuyet': {'Русский 🇷🇺': 'Не интересует', 'Oʻzbek tili 🇺🇿': 'Qiziqtirmaydi'},
              'back': {'Русский 🇷🇺': 'Назад', 'Oʻzbek tili 🇺🇿': 'Ortga'},
              'start': {'Русский 🇷🇺': 'Начать сначала', 'Oʻzbek tili 🇺🇿': 'Boshidan boshlash'},
-             'sendmail': {'Русский 🇷🇺': 'Ваше резюме отправлено на рассмотрение. Спасибо за отклик!', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi. Javobingiz uchun rahmat!'}                         
+             'sendmail': {'Русский 🇷🇺': 'Ваше резюме отправлено на рассмотрение. Спасибо за отклик!', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi. Javobingiz uchun rahmat!'},
+             'start': {'Русский 🇷🇺': 'Пожалуй, я сохраню это', 'Oʻzbek tili 🇺🇿': 'Balki saqlab qolarman'}
              
              
              }
@@ -420,8 +421,13 @@ def ask_resume(message):
         src = 'bot/send and clear' + message.document.file_name;
         with open(src, 'wb') as new_file:
             new_file.write(downloaded_file)
-
-        bot.reply_to(message, "Пожалуй, я сохраню это")
+        
+        markup__v1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn_1 = types.KeyboardButton(lang_dict['start'][user.lang])
+        btn_2 = types.KeyboardButton(lang_dict['back'][user.lang])
+        markup__v1.row(btn_1, btn_2)
+        
+        bot.reply_to(message, "Пожалуй, я сохраню это", reply_markup = markup__v1)
         Accept(message)
         
     except Exception:
@@ -438,7 +444,8 @@ def Accept(message):
 
     markup_accept = types.InlineKeyboardMarkup(row_width=1)
     item1 = types.InlineKeyboardButton(lang_dict['yes'][user.lang], callback_data='Да')
-    markup_accept.add(item1)
+    item2 = types.InlineKeyboardButton(lang_dict['back'][user.lang], callback_data='Назад')
+    markup_accept.add(item1, item2)
     
     bot.send_message(message.chat.id, lang_dict['accept'][user.lang], reply_markup = markup_accept)
 
@@ -456,6 +463,11 @@ def edu(call):
             chat_id = call.message.chat.id
             user = user_dict[chat_id]
             send_email(message)
+            
+        if call.data == 'Назад':
+            chat_id = call.message.chat.id
+            user = user_dict[chat_id]
+            between_vacancy_and_ask_resume(message)    
 
     except Exception as e:
         bot.reply_to(message, "ERROR")
