@@ -75,7 +75,7 @@ lang_dict = {'wrong_data': {'Русский 🇷🇺': 'Неверные дан�
              'back': {'Русский 🇷🇺': 'Назад', 'Oʻzbek tili 🇺🇿': 'Ortga'},
              'start': {'Русский 🇷🇺': 'Начать сначала', 'Oʻzbek tili 🇺🇿': 'Boshidan boshlash'},
              'sendmail': {'Русский 🇷🇺': 'Ваше резюме отправлено на рассмотрение. Спасибо за отклик!', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi. Javobingiz uchun rahmat!'},
-             'start': {'Русский 🇷🇺': 'Пожалуй, я сохраню это', 'Oʻzbek tili 🇺🇿': 'Balki saqlab qolarman'}
+             'i_save_it': {'Русский 🇷🇺': 'Пожалуй, я сохраню это', 'Oʻzbek tili 🇺🇿': 'Balki saqlab qolarman'}
              
              
              }
@@ -427,7 +427,7 @@ def ask_resume(message):
         btn_2 = types.KeyboardButton(lang_dict['back'][user.lang])
         markup__v1.row(btn_1, btn_2)
         
-        bot.reply_to(message, "Пожалуй, я сохраню это", reply_markup = markup__v1)
+        bot.reply_to(message, lang_dict['i_save_it'][user.lang], reply_markup = markup__v1)
         Accept(message)
         
     except Exception:
