@@ -2,18 +2,13 @@ import datetime
 import logging
 import time
 from datetime import datetime
-
-
 import telebot
 from django.http import JsonResponse
 from django.views import View
-
 from telebot import types
 from telebot.storage import StateMemoryStorage
-
 from core.settings import BOT_TOKEN, BOT_URL
 import os
-
 import email
 import email.mime.application
 import smtplib
@@ -22,12 +17,9 @@ import time
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 from bs4 import BeautifulSoup as bs
 from pathlib import Path
 from shutil import rmtree
-
-
 
 
 
@@ -75,11 +67,8 @@ lang_dict = {'wrong_data': {'Русский 🇷🇺': 'Неверные дан�
              'back': {'Русский 🇷🇺': 'Назад', 'Oʻzbek tili 🇺🇿': 'Ortga'},
              'start': {'Русский 🇷🇺': 'Начать сначала', 'Oʻzbek tili 🇺🇿': 'Boshidan boshlash'},
              'sendmail': {'Русский 🇷🇺': 'Ваше резюме отправлено на рассмотрение. Спасибо за отклик!', 'Oʻzbek tili 🇺🇿': 'Sizning rezyumeingiz koʻrib chiqish uchun yuborildi. Javobingiz uchun rahmat!'},
-             'i_save_it': {'Русский 🇷🇺': 'Пожалуй, я сохраню это', 'Oʻzbek tili 🇺🇿': 'Balki saqlab qolarman'}
-             
-             
+             'i_save_it': {'Русский 🇷🇺': 'Пожалуй, я сохраню это', 'Oʻzbek tili 🇺🇿': 'Balki saqlab qolarman'}                   
              }
-
 
 class User:
     def __init__(self, lang):
@@ -90,14 +79,10 @@ class User:
         self.jobs_name = None
         self.resume = None
         
-
-
-
 markupp = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 btn1 = types.KeyboardButton('Русский 🇷🇺')
 btn2 = types.KeyboardButton('Oʻzbek tili 🇺🇿')
 markupp.row(btn1, btn2)
-
 
 @bot.message_handler(commands=['start'])
 def process_start(message):
@@ -108,7 +93,6 @@ def process_start(message):
     bot.send_message(message.chat.id,
                      'Привет!\nПожалуйста, выбери язык\n\nAssalomu alaykum!\nIltimos, tilni tanlang',
                      reply_markup=markupp)
-
     bot.register_next_step_handler(message, ask_language)
 
 
@@ -139,12 +123,10 @@ def ask_language(message):
 
         if (lang == '/start'):
             process_start(message)
-            return
- 
+            return 
         user = User(lang)
         user_dict[chat_id] = user
         print(user)
-
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn = types.KeyboardButton(lang_dict['start'][user.lang])
         markup.row(btn)
@@ -158,7 +140,7 @@ def ask_language(message):
 def between_language_and_ask_name(message):
     chat_id = message.chat.id
     user = user_dict[chat_id]
-
+    
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     btn = types.KeyboardButton(lang_dict['start'][user.lang])
     markup.row(btn)
@@ -448,11 +430,6 @@ def Accept(message):
     bot.send_message(message.chat.id, lang_dict['accept'][user.lang], reply_markup = markup_accept)
 
 
-    
-
-
-
-
 @bot.callback_query_handler(func=lambda call: True)
 def edu(call):
     message = call.message
@@ -497,11 +474,7 @@ def send_email(message):
     <br>        
     <p>Имя: {user.name}<p>
     <p>Фамилия: {user.surname}<p>
-    <p>Номер: {user.number}<p>
-    
-
-
-                               
+    <p>Номер: {user.number}<p>                            
     </body>
     </html>
     """
@@ -533,8 +506,7 @@ def send_email(message):
     markup_start = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     btn = types.KeyboardButton('/start')
     markup_start.row(btn)   
-
-
+    
     bot.send_message(message.chat.id, lang_dict['sendmail'][user.lang])   
     bot.send_message(message.chat.id, lang_dict['again'][user.lang], reply_markup = markup_start) 
 
@@ -542,8 +514,6 @@ def send_email(message):
         process_start(message)
         return          
 
-
 bot.enable_save_next_step_handlers(delay=2)
-
 bot.load_next_step_handlers()
 
