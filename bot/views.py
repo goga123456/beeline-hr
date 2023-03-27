@@ -395,7 +395,7 @@ def between_vacancy_and_ask_resume(message):
     btn_2 = types.KeyboardButton(lang_dict['back'][user.lang])
     markup__v1.row(btn_1, btn_2)
 
-    msg = bot.send_message(message.chat.id, lang_dict['ask_resume'][user.lang], reply_markup = markup)
+    msg = bot.send_message(message.chat.id, lang_dict['ask_resume'][user.lang], reply_markup = markup__v1)
     bot.register_next_step_handler(msg, ask_resume)          
 
 @bot.message_handler(content_types=['document','text'])
