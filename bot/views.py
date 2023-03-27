@@ -398,7 +398,7 @@ def between_vacancy_and_ask_resume(message):
     msg = bot.send_message(message.chat.id, lang_dict['ask_resume'][user.lang], reply_markup = markup)
     bot.register_next_step_handler(msg, ask_resume)          
 
-@bot.message_handler(content_types=['document'])
+@bot.message_handler(content_types=['document','text'])
 def ask_resume(message):
     try:
         chat_id = message.chat.id
