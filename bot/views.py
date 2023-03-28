@@ -61,8 +61,8 @@ lang_dict = {'wrong_data': {'Русский 🇷🇺': 'Неверные дан�
 
              'yes': {'Русский 🇷🇺': 'Да', 'Oʻzbek tili 🇺🇿': 'Ha'},
             
-             'again': {'Русский 🇷🇺': 'Если хотите пройти опрос заново, нажмите на кнопку: "/start"',
-                       'Oʻzbek tili 🇺🇿': 'Soʻrovnomadan qaytadan oʻtishni istasangiz quyidagi tugmani bosing: "/start"'},
+             'again': {'Русский 🇷🇺': 'Если хотите отправить резюме ещё раз, нажмите на кнопку: "/start"',
+                       'Oʻzbek tili 🇺🇿': 'Agar siz rezyumeni yana yubormoqchi boʻlsangiz, "/start " tugmasini bosing.'},
              'ne_interesuyet': {'Русский 🇷🇺': 'Не интересует', 'Oʻzbek tili 🇺🇿': 'Qiziqtirmaydi'},
              'back': {'Русский 🇷🇺': 'Назад', 'Oʻzbek tili 🇺🇿': 'Ortga'},
              'start': {'Русский 🇷🇺': 'Начать сначала', 'Oʻzbek tili 🇺🇿': 'Boshidan boshlash'},
@@ -91,7 +91,7 @@ def process_start(message):
     btn2 = types.KeyboardButton('Oʻzbek tili 🇺🇿')
     markupp.row(btn1, btn2)
     bot.send_message(message.chat.id,
-                     'Привет!\nПожалуйста, выбери язык\n\nAssalomu alaykum!\nIltimos, tilni tanlang',
+                     'Привет!\nПожалуйста, выберите язык\n\nAssalomu alaykum!\nIltimos, tilni tanlang',
                      reply_markup=markupp)
     bot.register_next_step_handler(message, ask_language)
 
@@ -406,8 +406,6 @@ def ask_resume(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn = types.KeyboardButton(lang_dict['start'][user.lang])
         markup.row(btn)
-
-        bot.reply_to(message, lang_dict['i_save_it'][user.lang], reply_markup = markup)
         Accept(message)
         
     except Exception:
@@ -426,7 +424,6 @@ def Accept(message):
     item1 = types.InlineKeyboardButton(lang_dict['yes'][user.lang], callback_data='Да')
     item2 = types.InlineKeyboardButton(lang_dict['back'][user.lang], callback_data='Назад')
     markup_accept.add(item1, item2)
-    
     bot.send_message(message.chat.id, lang_dict['accept'][user.lang], reply_markup = markup_accept)
 
 
